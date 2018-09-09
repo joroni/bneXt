@@ -19,7 +19,7 @@ website:   	http://www.themepunch.com
 
 .tp-banner-container{
 	width:100%;
-	max-height: 600px;
+	max-height:480px;
 	position:relative;
 	padding:0;
 	pointer-events: auto;
@@ -31,10 +31,13 @@ website:   	http://www.themepunch.com
 .tp-banner{
 	width:100%;
 	position:relative;
+	max-height:480px;
+	overflow: hidden;
 }
 
 .tp-banner-fullscreen-container {
 		width:100%;
+		max-height:480px;
 		position:relative;
 		padding:0;
 }
