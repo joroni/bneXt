@@ -1,0 +1,11 @@
+.bannercontainer {
+	width:100%;
+	position:relative;
+	padding:0;
+}
+ 
+.banner{
+	width:100%;
+    position:relative;
+    height: 480px;
+}

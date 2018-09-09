@@ -1,0 +1,246 @@
+<div id="container">
+
+    <link rel="stylesheet" href="css/header-style.css" type="text/css" media="all">
+    <link rel="stylesheet" href="vendor/tilt/css/tilt.css" type="text/css" media="all">
+    <link rel="stylesheet" href="vendor/css3-animate-it/css/animations.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <div id="nogl">
+        <h1>Aww, No WebGL :(</h1>
+        <p>This experiment requires WebGL to run. Please enable it, or come back and visit with a <a href="http://caniuse.com/webgl"
+                target="_blank">compatible browser</a>.</p>
+    </div>
+    <div data-tilt data-tilt-glare="true" data-tilt-transition="true" data-tilt-scale="1.1" class="flex-container hexagon">
+        <div class="slider-box">
+            <ul class="sliding-text slideshow">
+                <div class="timer"></div>
+                <li class="slide">
+                    <div data-tilt class='animatedParent' data-sequence='500'>
+                        <h1 class='animated allcaps growIn fast' data-id='1'>CSS3 Animate It</h1>
+                        <h5 class='animated  bounceInRight fast' data-id='2'>
+                            <div style="max-width:800px; margin: 0 auto;">
+                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh. Pellentesque in
+                                ipsum
+                                id orci porta dapibus. Cras ultricies ligula sed magna dictum porta. Quisque velit
+                                nisi, pretium ut lacinia in, elementum id enim. Curabitur arcu erat, accumsan id
+                                imperdiet.
+                            </div>
+                        </h5>
+                    </div>
+                    <!--    <h1 class="allcaps animated bounce delay-2s">Digital Transformation</h1>
+                        <h2  class="allcaps delay-4s" >Partner</h2>-->
+                </li>
+                <li class="slide">
+                    <div data-tilt class='animatedParent' data-sequence='600'>
+                        <h1 class='animated allcaps growIn fast' data-id='3'>How about</h1>
+                        <h5 class='animated  bounceInRight fast' data-id='4'>
+                            <div style="max-width:800px; margin: 0 auto;">
+                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh. Pellentesque in
+                                ipsum
+                                id orci porta dapibus. Cras ultricies ligula sed magna dictum porta. Quisque velit
+                                nisi, pretium ut lacinia in, elementum id enim. Curabitur arcu erat, accumsan id
+                                imperdiet.
+                            </div>
+                        </h5>
+                    </div>
+                    <!--    <h1 class="allcaps animated bounce delay-2s">Digital Transformation</h1>
+                        <h2  class="allcaps delay-4s" >Partner</h2>-->
+                </li>
+            </ul>
+        </div>
+        <ul id="demo" class="container move-up"></ul>
+    </div>
+
+    <script>
+        var text = "";
+        var i;
+        var n = 0;
+        for (i = 0; i < 120; i++) {
+            if (n == 4) {
+
+                text += '<li class="hexa c4">' +
+                    '<div class="front"></div>' +
+                    '<div class="back">10101</div>' +
+                    '</li>';
+
+                n = 0;
+            } else if (n == 3){
+                text += '<li class="hexa c3">' +
+                '<div class="front"></div>' +
+                '<div class="back">10101</div>' +
+                '</li>';
+
+            n = 0;
+        } else if (n == 2) {
+
+            text += '<li class="hexa c2">' +
+                '<div class="front"></div>' +
+                '<div class="back">10101</div>' +
+                '</li>';
+
+            n = 0;
+        } else {
+
+            text += '<li class="hexa">' +
+                '<div class="front"></div>' +
+                '<div class="back">10102</div>' +
+                '</li>';
+
+
+        }
+        n++;
+        }
+        document.getElementById("demo").innerHTML = text;
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sketch.js/1.0/sketch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script type="text/javascript" src="vendor/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/130527/vanilla-tilt.min.js"></script>
+    <script src='vendor/css3-animate-it/js/css3-animate-it.js'></script>
+    <script>
+        function draw(e) {
+            let xCount = 35;
+            let yCount = 80;
+            let iXCount = 1 / (xCount - 1);
+            let iYCount = 1 / (yCount - 1);
+            let time = e * 0.001;
+            let timeStep = 0.01;
+            let grad = ctx.createLinearGradient(-width, 0, width, height);
+            let t = time % 1;
+            let tSide = floor(time % 2) === 0;
+            let hueA = tSide ? 340 : 210;
+            let hueB = !tSide ? 340 : 210;
+            let colorA = hsl(hueA, 100, 50);
+            let colorB = hsl(hueB, 100, 50);
+            grad.addColorStop(map(t, 0, 1, THIRD, ZERO), colorA);
+            grad.addColorStop(map(t, 0, 1, TWO_THIRDS, THIRD), colorB);
+            grad.addColorStop(map(t, 0, 1, ONE, TWO_THIRDS), colorA);
+            ctx.globalAlpha = map(cos(time), -1, 1, 0.15, 0.3);
+            background(grad);
+            ctx.globalAlpha = 1;
+            beginPath();
+            for (let j = 0; j < yCount; j++) {
+                let tj = j * iYCount;
+                let c = cos(tj * TAU + time) * 0.1;
+                for (let i = 0; i < xCount; i++) {
+                    let t = i * iXCount;
+                    let n = noise.noise3D(t, time, c);
+                    let y = n * height_half;
+                    let x = t * (width + 20) - width_half - 10;
+                    (i ? lineTo : moveTo)(x, y);
+                }
+                time += timeStep;
+            }
+            compositeOperation(compOper.lighter);
+            ctx.filter = 'blur(10px)';
+            stroke(grad, 5);
+            ctx.filter = 'blur(5px)';
+            stroke(hsl(0, 0, 100, 0.8), 2);
+        }
+
+
+
+        /* Slider (work in progress)
+         *
+         */
+        $(function () {
+
+            // slider type
+            $t = "slide"; // opitions are fade and slide
+
+            //variables
+            $f = 1000, // fade in/out speed
+                $s = 1000, // slide transition speed (for sliding carousel)
+                $d = 5000; // duration per slide
+
+            $n = $('.slide').length; //number of slides
+            $w = $('.slide').width(); // slide width
+            $c = $('.flex-container').width(); // container width
+            $ss = $n * $w; // slideshow width
+
+
+            function timer() {
+                $('.timer').animate({
+                    "width": $w
+                }, $d);
+                $('.timer').animate({
+                    "width": 0
+                }, 0);
+            }
+
+
+            // fading function
+            function fadeInOut() {
+                timer();
+                $i = 0;
+                var setCSS = {
+                    'position': 'absolute',
+                    'top': '0',
+                    'left': '0'
+                }
+
+                $('.slide').css(setCSS);
+
+                //show first item
+                $('.slide').eq($i).show();
+
+
+                setInterval(function () {
+                    timer();
+                    $('.slide').eq($i).fadeOut($f);
+                    if ($i == $n - 1) {
+                        $i = 0;
+                    } else {
+                        $i++;
+                    }
+                    $('.slide').eq($i).fadeIn($f, function () {
+                        $('.timer').css({
+                            'width': '0'
+                        });
+                    });
+
+                }, $d);
+
+            }
+
+            function slide() {
+                timer();
+                var setSlideCSS = {
+                    'float': 'left',
+                    'display': 'inline-block',
+                    'width': $c
+                }
+                var setSlideShowCSS = {
+                    // 'width': $ss // set width of slideshow container
+                    'width': $ss
+                }
+                $('.slide').css(setSlideCSS);
+                $('.slideshow').css(setSlideShowCSS);
+
+
+                setInterval(function () {
+                    timer();
+                    $('.slideshow').animate({
+                        "left": -$w
+                    }, $s, function () {
+                        // to create infinite loop
+                        $('.slideshow').css('opaciity', 0).append($('.slide:first'));
+                    });
+                }, $d);
+
+            }
+
+            if ($t == "fade") {
+                fadeInOut();
+
+            }
+            if ($t == "slide") {
+                slide();
+
+            } else {
+
+            }
+        });
+    </script>
+</div>
